@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=studyplatform
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres_password
+      - JWT_SECRET=studyplatform_jwt_secret_key_needs_to_be_long_and_secure_in_production
+    networks:
+      - studyplatform-network
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=studyplatform
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - studyplatform-network
+
+networks:
+  studyplatform-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
