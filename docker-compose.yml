@@ -15,13 +15,14 @@ services:
       - DB_USERNAME=postgres
       - DB_PASSWORD=postgres_password
       - JWT_SECRET=studyplatform_jwt_secret_key_needs_to_be_long_and_secure_in_production
+      - SERVER_SERVLET_CONTEXT_PATH=
     networks:
       - studyplatform-network
 
   postgres:
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       - POSTGRES_DB=studyplatform
       - POSTGRES_USER=postgres

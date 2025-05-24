@@ -1,6 +1,5 @@
 package com.studyplatform.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -15,20 +14,26 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Web configuration for serving static resources and handling Single Page Application routing
- * within the /api context path
+ * Configuration for serving static resources from the root URL
+ * This is separate from the API endpoints which are served at /api
  */
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class StaticResourceConfig implements WebMvcConfigurer {
 
-    // No need to override addResourceHandlers as static resources are now handled by StaticResourceConfig
-    // This class is kept for potential future API-specific configurations
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Register resource handlers for static resources at the root URL
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .resourceChain(true)
+                .addResolver(new SpaResourceResolver());
+    }
 
     /**
      * Resource resolver for Single Page Application routing
      * Forwards all requests that don't match a resource to index.html
      */
-    private static class PushStateResourceResolver implements ResourceResolver {
+    private static class SpaResourceResolver implements ResourceResolver {
         private final Resource index = new ClassPathResource("/static/index.html");
         private final List<String> handledExtensions = Arrays.asList("html", "js", "json", "csv", "css", "png", "svg", "eot", "ttf", "woff", "woff2", "appcache", "jpg", "jpeg", "gif", "ico");
         private final List<String> ignoredPaths = Arrays.asList("/api");
