@@ -14,6 +14,29 @@ Study Platform is a web application that allows users to browse, enroll in, and 
 - Progress monitoring
 - Responsive design for desktop and mobile devices
 
+## User Registration System
+
+The platform implements a secure user registration system with the following features:
+
+### Registration Process
+1. Users enter a username, email, and password
+2. Password requirements:
+   - Minimum 6 characters
+   - Must contain only English letters (a-z, A-Z) and digits (0-9)
+3. Client-side validation ensures password requirements are met before submission
+4. Server-side validation provides additional security
+
+### Email Verification
+1. After registration, a verification email is sent to the user's email address
+2. The email contains a unique verification link that expires after 60 minutes
+3. Users must click the verification link to activate their account
+4. Accounts remain inactive until email verification is completed
+
+### Security Features
+- Passwords are securely hashed using BCrypt
+- JWT (JSON Web Token) authentication for secure API access
+- Protection against common security vulnerabilities
+
 ## Technology Stack
 
 ### Backend
@@ -23,6 +46,34 @@ Study Platform is a web application that allows users to browse, enroll in, and 
 - Spring Data JPA
 - PostgreSQL database
 - Maven build system
+
+## Database Schema
+
+The application uses a relational database with the following structure:
+
+1. **Users** - Stores user information with role-based access control
+   - Roles: STUDENT, TEACHER, ADMIN
+   - Only students can self-register
+   - Teachers and admins must be created manually
+
+2. **Courses** - Stores course information
+
+3. **Lessons** - Stores lesson information for courses
+
+4. **Enrollments** - Tracks student enrollments in courses
+
+5. **Progress** - Tracks student progress through lessons
+
+6. **Materials** - Stores educational content (text and video links)
+   - Only teachers and admins can create/manage materials
+
+7. **Assignments** - Stores text-based tasks created by teachers
+   - Only teachers and admins can create/manage assignments
+
+8. **Grades** - Stores student grades for completed assignments
+   - Only teachers and admins can grade assignments
+
+For detailed information on how to access and manage the database, see [DATABASE_GUIDE.md](DATABASE_GUIDE.md).
 
 ### Frontend
 - HTML5
@@ -102,8 +153,11 @@ The application provides the following API endpoints:
 
 - **Health Check**: `GET /api/health` - Verify the API is running
 - **Authentication**:
-  - `POST /api/auth/register` - Register a new user
+  - `POST /api/auth/register` - Register a new user (students only)
   - `POST /api/auth/login` - Authenticate and get JWT token
+  - `GET /api/auth/verify` - Verify email address
+- **Admin** (requires ADMIN role):
+  - `POST /api/admin/users` - Create a new teacher or admin user
 - **Courses**:
   - `GET /api/courses` - Get all courses
   - `GET /api/courses/{id}` - Get course details
@@ -113,6 +167,18 @@ The application provides the following API endpoints:
 - **Progress**:
   - `POST /api/progress` - Mark lesson as completed
   - `GET /api/progress/{enrollmentId}` - Get progress for enrollment
+- **Materials** (management requires TEACHER or ADMIN role):
+  - `POST /api/materials` - Create a new material
+  - `GET /api/materials` - Get all materials
+  - `GET /api/materials/{id}` - Get material details
+- **Assignments** (management requires TEACHER or ADMIN role):
+  - `POST /api/assignments` - Create a new assignment
+  - `GET /api/assignments` - Get all assignments
+  - `GET /api/assignments/{id}` - Get assignment details
+- **Grades** (management requires TEACHER or ADMIN role):
+  - `POST /api/grades` - Grade an assignment
+  - `GET /api/grades/student/{studentId}` - Get grades for a student
+  - `GET /api/grades/assignment/{assignmentId}` - Get grades for an assignment
 
 ## Development
 

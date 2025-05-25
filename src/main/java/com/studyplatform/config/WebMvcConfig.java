@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.studyplatform.controller.RootController;
 
 /**
  * Configuration for setting up a separate servlet dispatcher for the root URL
@@ -27,12 +26,12 @@ public class WebMvcConfig {
 
         // Create a separate application context for the root URL
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
-        applicationContext.register(StaticResourceConfig.class, RootController.class);
+        applicationContext.register(StaticResourceConfig.class);
         dispatcherServlet.setApplicationContext(applicationContext);
 
         // Register the servlet for the root URL
         ServletRegistrationBean<DispatcherServlet> servletRegistrationBean = 
-            new ServletRegistrationBean<>(dispatcherServlet, "/*");
+            new ServletRegistrationBean<>(dispatcherServlet, "/");
         servletRegistrationBean.setName("rootDispatcher");
         servletRegistrationBean.setLoadOnStartup(1);
 

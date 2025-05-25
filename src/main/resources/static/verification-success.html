@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - Study Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .verification-container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .verification-icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+        }
+        
+        .verification-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4a6bdf;
+        }
+        
+        .verification-message {
+            margin-bottom: 30px;
+            color: #6c757d;
+        }
+        
+        .verification-error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <div id="success-content">
+            <div class="verification-icon">✅</div>
+            <h1 class="verification-title">Email Verification Successful!</h1>
+            <p class="verification-message">Your email has been verified successfully. You can now log in to your account.</p>
+            <a href="/" class="btn btn-primary">Go to Login</a>
+        </div>
+        
+        <div id="error-content" style="display: none;">
+            <div class="verification-icon">❌</div>
+            <h1 class="verification-title verification-error">Verification Failed</h1>
+            <p class="verification-message verification-error">The verification link is invalid or has expired.</p>
+            <a href="/" class="btn btn-primary">Go to Home</a>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the token from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            if (!token) {
+                showError();
+                return;
+            }
+            
+            // Verify the token
+            fetch(`/api/auth/verify?token=${token}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.verified) {
+                        showSuccess();
+                    } else {
+                        showError();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError();
+                });
+        });
+        
+        function showSuccess() {
+            document.getElementById('success-content').style.display = 'block';
+            document.getElementById('error-content').style.display = 'none';
+        }
+        
+        function showError() {
+            document.getElementById('success-content').style.display = 'none';
+            document.getElementById('error-content').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

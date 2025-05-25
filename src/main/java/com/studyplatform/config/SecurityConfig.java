@@ -40,16 +40,26 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 // Allow access to static resources
-                .requestMatchers("/", "/index.html", "/register.html", "/web_school_page.html", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/index.html", "/verification-success.html", "/css/**", "/js/**", "/images/**").permitAll()
+                // Protect dashboard page
+                .requestMatchers("/dashboard.html").authenticated()
                 // Allow access to API endpoints
-                .requestMatchers("/api/health", "/api/auth/**").permitAll()
+                .requestMatchers("/api/health", "/api/auth/login", "/api/auth/register", "/api/auth/verify").permitAll()
+                // Allow access to token validation endpoint (JWT filter will handle authentication)
+                .requestMatchers("/api/auth/validate-token").permitAll()
+                // Restrict content management endpoints to teachers and admins
+                .requestMatchers("/api/materials/**", "/api/assignments/**").hasAnyRole("TEACHER", "ADMIN")
+                // Allow students to view courses and submit assignments
+                .requestMatchers("/api/courses/**", "/api/enrollments/**", "/api/progress/**").authenticated()
                 // Require authentication for all other requests
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            .csrf(csrf -> csrf.disable()); // Disable CSRF for simplicity in this example
+            .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity in this example
+            .formLogin(form -> form.disable()) // Disable form login to prevent default login page
+            .httpBasic(basic -> basic.disable()); // Disable HTTP Basic authentication
 
         return http.build();
     }

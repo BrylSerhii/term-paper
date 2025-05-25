@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Study Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="container">
+                <div class="logo">Study Platform</div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="index.html" class="nav-link">Home</a></li>
+                        <li><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+                        <li><a href="#" class="nav-link">Courses</a></li>
+                        <li><a href="#" class="nav-link">About</a></li>
+                        <li><a href="#" class="nav-link" id="logout-btn">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="dashboard">
+                <div class="container">
+                    <h1 class="dashboard-title">Welcome to Your Dashboard</h1>
+                    <div class="user-info">
+                        <h2>User Information</h2>
+                        <div id="user-details">
+                            <p>Loading user information...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-content">
+                        <div class="dashboard-card">
+                            <h3>My Courses</h3>
+                            <p>You are not enrolled in any courses yet.</p>
+                            <button class="btn btn-primary">Browse Courses</button>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <h3>Recent Activity</h3>
+                            <p>No recent activity to display.</p>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <h3>Upcoming Assignments</h3>
+                            <p>No upcoming assignments.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-logo">Study Platform</div>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="dashboard.html">Dashboard</a></li>
+                            <li><a href="#">Courses</a></li>
+                            <li><a href="#">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>Email: info@studyplatform.com</p>
+                        <p>Phone: +1 (123) 456-7890</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2025 Study Platform. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

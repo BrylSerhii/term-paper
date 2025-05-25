@@ -33,6 +33,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private boolean emailVerified = false;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -61,10 +64,10 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return emailVerified;
     }
 
     public enum Role {
-        STUDENT, ADMIN
+        STUDENT, TEACHER, ADMIN
     }
 }
