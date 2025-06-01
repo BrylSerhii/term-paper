@@ -81,35 +81,6 @@ For detailed information on how to access and manage the database, see [DATABASE
 - JavaScript (ES6+)
 - Responsive design
 
-## Project Structure
-
-The project follows a standard Spring Boot application structure:
-
-```
-study-platform/
-├── src/
-│   ├── main/
-│   │   ├── java/            # Java source code
-│   │   │   └── com/
-│   │   │       └── studyplatform/
-│   │   │           ├── config/       # Configuration classes
-│   │   │           ├── controller/   # REST controllers
-│   │   │           ├── dto/          # Data Transfer Objects
-│   │   │           ├── exception/    # Exception handling
-│   │   │           ├── model/        # JPA entities
-│   │   │           ├── repository/   # Spring Data repositories
-│   │   │           ├── security/     # Security configuration
-│   │   │           └── service/      # Business logic
-│   │   └── resources/
-│   │       ├── static/       # Static web resources
-│   │       │   ├── css/      # CSS stylesheets
-│   │       │   ├── js/       # JavaScript files
-│   │       │   └── images/   # Image assets
-│   │       └── application.yml  # Application configuration
-│   └── test/                 # Test code
-└── pom.xml                   # Maven configuration
-```
-
 ## Frontend Integration
 
 The application integrates a frontend HTML website with the Spring Boot backend:
@@ -146,39 +117,6 @@ The application integrates a frontend HTML website with the Spring Boot backend:
    docker-compose up -d
    ```
 4. Access the application at http://localhost:8080
-
-## API Endpoints
-
-The application provides the following API endpoints:
-
-- **Health Check**: `GET /api/health` - Verify the API is running
-- **Authentication**:
-  - `POST /api/auth/register` - Register a new user (students only)
-  - `POST /api/auth/login` - Authenticate and get JWT token
-  - `GET /api/auth/verify` - Verify email address
-- **Admin** (requires ADMIN role):
-  - `POST /api/admin/users` - Create a new teacher or admin user
-- **Courses**:
-  - `GET /api/courses` - Get all courses
-  - `GET /api/courses/{id}` - Get course details
-- **Enrollments**:
-  - `POST /api/enrollments` - Enroll in a course
-  - `GET /api/enrollments` - Get user enrollments
-- **Progress**:
-  - `POST /api/progress` - Mark lesson as completed
-  - `GET /api/progress/{enrollmentId}` - Get progress for enrollment
-- **Materials** (management requires TEACHER or ADMIN role):
-  - `POST /api/materials` - Create a new material
-  - `GET /api/materials` - Get all materials
-  - `GET /api/materials/{id}` - Get material details
-- **Assignments** (management requires TEACHER or ADMIN role):
-  - `POST /api/assignments` - Create a new assignment
-  - `GET /api/assignments` - Get all assignments
-  - `GET /api/assignments/{id}` - Get assignment details
-- **Grades** (management requires TEACHER or ADMIN role):
-  - `POST /api/grades` - Grade an assignment
-  - `GET /api/grades/student/{studentId}` - Get grades for a student
-  - `GET /api/grades/assignment/{assignmentId}` - Get grades for an assignment
 
 ## Development
 
